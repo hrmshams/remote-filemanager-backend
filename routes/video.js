@@ -2,12 +2,15 @@ const express = require("express")
 const router = express.Router()
 
 const srtVttConvertor = require("srt-to-vtt")
-const path = require("path")
+const pathPackage = require("path")
 const fs = require("fs")
+var base64 = require("base-64")
 
 // getting a video
-router.get("/:path", function (req, res) {
-  const path = "../data/test2.mp4"
+router.get("/:id", function (req, res) {
+  const { id } = req.params
+  const path = base64.decode(id)
+
   const stat = fs.statSync(path)
   const fileSize = stat.size
   const range = req.headers.range
